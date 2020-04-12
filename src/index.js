@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ReminderReducer from "./reducers/ReminderReducer";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
-import {Provider} from 'react-redux'
+import { Provider } from "react-redux";
 
 const store = createStore(
   ReminderReducer,
@@ -14,7 +14,7 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store = {store}>
+  <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById("root")

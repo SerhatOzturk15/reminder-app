@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
-import FormLabel from "react-bootstrap/FormLabel";
 import CategoryProvider from "./CategoryProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/src/stylesheets/datepicker.scss";
@@ -19,36 +17,54 @@ const FormView = ({
   handleTitleChange,
   handleDateChange,
   handleNoticeChange,
-  handleSubmit
+  handleSubmit,
+  submitText,
+  endDateLabel,
 }) => {
-
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Control size="lg" type="text" placeholder="Title" value = {selectedTitle} onChange = {handleTitleChange} />
+      <Form.Label >Title</Form.Label>
+        <Form.Control
+          required
+          size="lg"
+          type="text"
+          placeholder="Title"
+          value={selectedTitle}
+          onChange={handleTitleChange}
+        />
       </Form.Group>
       <CategoryProvider
         categories={categories}
         providers={providers}
         selectedCategory={selectedCategory}
-        selectedProvider = {selectedProvider}
-        handleCategoryChange = {handleCategoryChange}
-        handleProviderChange = {handleProviderChange}
+        selectedProvider={selectedProvider}
+        handleCategoryChange={handleCategoryChange}
+        handleProviderChange={handleProviderChange}
       ></CategoryProvider>
       <Form.Group>
-        <FormLabel>Contract end date</FormLabel>
+      <Form.Label >Contract End Date</Form.Label>
         <DatePicker
+          required
+          className="date-picker"
           selected={new Date(selectedContractEndDate)}
           onSelect={(e) => handleDateChange(e)}
           onChange={(e) => handleDateChange(e)}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Control size="lg" type="text" placeholder="Notice Period" value = {selectedNoticePeriod} onChange = {handleNoticeChange}/>
+      <Form.Label >Notice Period</Form.Label>
+        <Form.Control
+          size="lg"
+          type="text"
+          placeholder="Notice Period"
+          value={selectedNoticePeriod}
+          onChange={handleNoticeChange}
+        />
       </Form.Group>
-      <Link to={`/details`}>
-        <button className="btn btn-primary" onSubmit = {handleSubmit}>Search</button>
-      </Link>
+      <button className="btn btn-primary" type="submit">
+        {submitText}
+      </button>
     </Form>
   );
 };

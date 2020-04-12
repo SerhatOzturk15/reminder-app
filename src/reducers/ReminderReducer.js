@@ -2,8 +2,10 @@ const initialState = {
   title: "",
   category: "",
   provider: "",
-  contractEndDate: new Date(),
+  contractEndDate: new Date().toString(),
   noticePeriod: "",
+  categories: [],
+  providers: []
 };
 
 const ReminderReducer = (state = initialState, action) => {
@@ -27,6 +29,10 @@ const ReminderReducer = (state = initialState, action) => {
       return {...state, contractEndDate: action.payload.contractEndDate}
     case "SET_NOTICE":
       return {...state, noticePeriod: action.payload.noticePeriod}
+    case "SET_CATEGORIES":
+      return {...state, categories: action.payload.categories}
+    case "SET_PROVIDERS":
+      return {...state, providers: action.payload.providers}
     default:
       return state;
   }

@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Form from "./../components/Form";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCategory,
-  setProviders,
   setTitle,
   setContractEndDate,
   setNoticePeriod,
+  setProvider,
+  setCategories,
+  setProviders
 } from "./../actions/reminderAction";
 
-const RemainderFormContainer = () => {
+const RemainderFormContainer = ({ history }) => {
   const dispatch = useDispatch();
   const title = useSelector((store) => store.title);
   const category = useSelector((store) => store.category);
   const provider = useSelector((store) => store.provider);
   const contractEndDate = useSelector((store) => store.contractEndDate);
   const noticePeriod = useSelector((store) => store.noticePeriod);
-  const [categories, setCategories] = useState([]);
-  const [providers, setProviders] = useState([]);
+  const categories = useSelector((store) => store.categories);
+  const providers = useSelector((store) => store.providers);
 
   const fetchFromAPI = (endpoint) => {
     return new Promise((resolve, reject) => {
@@ -34,29 +37,35 @@ const RemainderFormContainer = () => {
   useEffect(() => {
     fetchFromAPI(`https://api-gateway.remind.me/provider/category`).then(
       (response) => {
-        setCategories(response);
+        dispatch(setCategories(response));
       }
     );
-    if (category) {
-      fetchFromAPI(
-        `https://api-gateway.remind.me/provider/categoryProvider/category/${"01f5af94-bd33-4d4e-864e-fe04c67fcd0e"}`
-      ).then((response) => {
-        setProviders(response);
-      });
+
+  }, [dispatch]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === true) {
+      history.push("/details");
     }
-  }, [category]);
+    return;
+  };
 
   const handleCategoryChange = (e) => {
     const categoryId = e.currentTarget.value;
     fetchFromAPI(
       `https://api-gateway.remind.me/provider/categoryProvider/category/${categoryId}`
     ).then((response) => {
-      dispatch(setCategory(categoryId))
-      setProviders(response);
+      dispatch(setCategory(categoryId));
+      dispatch(setProviders(response));
     });
   };
 
-  const handleProviderChange = (e) => {};
+  const handleProviderChange = (e) => {
+    const provider = e.currentTarget.value;
+    dispatch(setProvider(provider));
+  };
   const handleDateChange = (date) => {
     const B = date.toString();
     dispatch(setContractEndDate(B));
@@ -85,9 +94,12 @@ const RemainderFormContainer = () => {
         handleDateChange={handleDateChange}
         handleTitleChange={handleTitleChange}
         handleNoticeChange={handleNoticeChange}
+        submitText="Submit"
+        endDateLabel="Contract End Date"
+        handleSubmit={handleSubmit}
       />
     </div>
   );
 };
 
-export default RemainderFormContainer;
+export default withRouter(RemainderFormContainer);

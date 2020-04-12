@@ -1,7 +1,7 @@
 export const setForm = (formObject) => {
   return {
     type: "SET_FORM",
-    payload: formObject,
+    payload: {formObject},
   };
 };
 export const setTitle = (title) => {
@@ -34,5 +34,19 @@ export const setNoticePeriod = (noticePeriod) => {
   return {
     type: "SET_NOTICE",
     payload: { noticePeriod },
+  };
+};
+
+export const setCategories = (categories) => {
+  return {
+    type: "SET_CATEGORIES",
+    payload: {categories},
+  };
+};
+
+export const setProviders = (providers) => {
+  return {
+    type: "SET_PROVIDERS",
+    payload: {providers},
   };
 };

@@ -10,16 +10,19 @@ const CategoryProvider = ({
   handleProviderChange
 }) => {
   return (
-    <Form.Group controlId="exampleForm.ControlSelect1">
-      <Form.Label>SELECT LABEL</Form.Label>
-      <Form.Control as="select" onChange = {handleCategoryChange}>
+    <Form.Group controlId="exampleForm.ControlSelect1" className = 'category-provider-container'>
+      <Form.Label >Category Name</Form.Label>
+      <Form.Control required as="select" onChange = {handleCategoryChange} size="lg" className = 'form-dropdown'>
+      <option />
         {categories.map((category) => {
-          return <option key = {category.id} value = {category.id} {...category.id === selectedCategory ? "selected" : ""}>{category.categoryName}</option>;
+          return <option key = {category.id} value = {category.id} selected = {category.id === selectedCategory}>{category.categoryName}</option>;
         })}
       </Form.Control>
-      <Form.Control as="select" onChange = {handleProviderChange}>
+      <Form.Label >Provider Name</Form.Label>
+      <Form.Control required as="select" onChange = {handleProviderChange} size="lg" className = 'form-dropdown'>
+      <option />
         {providers.map((provider) => {
-          return <option key = {provider.id}>{provider.id}</option>;
+          return <option key = {provider.id} value = {provider.id} selected = {provider.id === selectedProvider}>{provider.company.companyName}</option>;
         })}
       </Form.Control>
     </Form.Group>
