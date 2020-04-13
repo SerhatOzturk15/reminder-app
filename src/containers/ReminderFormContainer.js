@@ -1,26 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "./../components/Form";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setCategory,
-  setTitle,
-  setContractEndDate,
-  setNoticePeriod,
-  setProvider,
   setCategories,
-  setProviders
+  setProviders,
+  setForm,
 } from "./../actions/reminderAction";
 
 const RemainderFormContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const title = useSelector((store) => store.title);
-  const category = useSelector((store) => store.category);
-  const provider = useSelector((store) => store.provider);
-  const contractEndDate = useSelector((store) => store.contractEndDate);
-  const noticePeriod = useSelector((store) => store.noticePeriod);
+
+  //store states
+  const storetitle = useSelector((store) => store.title);
+  const storecategory = useSelector((store) => store.category);
+  const storeprovider = useSelector((store) => store.provider);
+  const storecontractEndDate = useSelector((store) => store.contractEndDate);
+  const storenoticePeriod = useSelector((store) => store.noticePeriod);
   const categories = useSelector((store) => store.categories);
   const providers = useSelector((store) => store.providers);
+
+  //local states
+  const [title, setTitle] = useState(storetitle);
+  const [category, setCategory] = useState(storecategory);
+  const [provider, setProvider] = useState(storeprovider);
+  const [contractEndDate, setContractEndDate] = useState(storecontractEndDate);
+  const [noticePeriod, setNoticePeriod] = useState(storenoticePeriod);
 
   const fetchFromAPI = (endpoint) => {
     return new Promise((resolve, reject) => {
@@ -28,9 +33,6 @@ const RemainderFormContainer = ({ history }) => {
         .then((res) => res.json())
         .then((result) => {
           resolve(result);
-        })
-        .catch(() => {
-          //setIsLoading(false);
         });
     });
   };
@@ -40,13 +42,15 @@ const RemainderFormContainer = ({ history }) => {
         dispatch(setCategories(response));
       }
     );
-
   }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
+      dispatch(
+        setForm({ title, category, provider, contractEndDate, noticePeriod })
+      );
       history.push("/details");
     }
     return;
@@ -57,30 +61,32 @@ const RemainderFormContainer = ({ history }) => {
     fetchFromAPI(
       `https://api-gateway.remind.me/provider/categoryProvider/category/${categoryId}`
     ).then((response) => {
-      dispatch(setCategory(categoryId));
+      setCategory(categoryId);
       dispatch(setProviders(response));
     });
   };
 
   const handleProviderChange = (e) => {
     const provider = e.currentTarget.value;
-    dispatch(setProvider(provider));
+    setProvider(provider);
   };
   const handleDateChange = (date) => {
-    const B = date.toString();
-    dispatch(setContractEndDate(B));
+    if (date) {
+      const selectedDate = date.toString();
+      setContractEndDate(selectedDate);
+    }
   };
   const handleTitleChange = (e) => {
     const title = e.currentTarget.value;
-    dispatch(setTitle(title));
+    setTitle(title);
   };
   const handleNoticeChange = (e) => {
     const notice = e.currentTarget.value;
-    dispatch(setNoticePeriod(notice));
+    setNoticePeriod(notice);
   };
 
   return (
-    <div className="formContainer">
+    <div className="form-container">
       <Form
         selectedTitle={title}
         categories={categories}

@@ -1,11 +1,13 @@
-.App {
+
+.form-container {
+  margin: 0 auto;
+  padding: 80px;
   background: aquamarine;
 }
 
-.formContainer {
-  width: 70%;
+.details-container {
   margin: 0 auto;
-  padding: 20px 0px;
+  padding: 80px;
 }
 
 .react-datepicker-wrapper {

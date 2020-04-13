@@ -17,47 +17,39 @@ const RemainderDetailsContainer = () => {
   const providerName = providerElement
     ? providerElement.company.companyName
     : "";
-  console.log('this is:  ' + providerElement)
   return (
-    <>
-
-          <Table className="table" striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Title</td>
-                <td>{title}</td>
-              </tr>
-              <tr>
-                <td>Category</td>
-                <td>{categoryName}</td>
-              </tr>
-              <tr>
-                <td>Provider</td>
-                <td>{providerName}</td>
-              </tr>
-              <tr>
-                <td>Contract End Date</td>
-                <td>{new Date(contractEndDate).toISOString().slice(0, 10)}</td>
-              </tr>
-              <tr>
-                <td>Notice Period</td>
-                <td>{noticePeriod}</td>
-              </tr>
-            </tbody>
-          </Table>
-
-      {/* <div>{title}</div>
-      <div>{categories.find(item => item.id === category).categoryName}</div>
-      <div>{provider}</div>
-      <div>{contractEndDate}</div>
-      <div>{noticePeriod}</div> */}
-    </>
+    <div className = 'details-container'>
+      <Table className="table" striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td>{title}</td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td>{categoryName}</td>
+          </tr>
+          <tr>
+            <td>Provider</td>
+            <td>{providerName}</td>
+          </tr>
+          <tr>
+            <td>Contract End Date</td>
+            <td>{new Date(contractEndDate).toISOString().slice(0, 10)}</td>
+          </tr>
+          <tr>
+            <td>Notice Period</td>
+            <td>{noticePeriod}</td>
+          </tr>
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

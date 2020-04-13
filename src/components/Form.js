@@ -24,7 +24,7 @@ const FormView = ({
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-      <Form.Label >Title</Form.Label>
+        <Form.Label>Title</Form.Label>
         <Form.Control
           required
           size="lg"
@@ -43,7 +43,7 @@ const FormView = ({
         handleProviderChange={handleProviderChange}
       ></CategoryProvider>
       <Form.Group>
-      <Form.Label >Contract End Date</Form.Label>
+        <Form.Label>Contract End Date</Form.Label>
         <DatePicker
           required
           className="date-picker"
@@ -53,7 +53,7 @@ const FormView = ({
         />
       </Form.Group>
       <Form.Group>
-      <Form.Label >Notice Period</Form.Label>
+        <Form.Label>Notice Period</Form.Label>
         <Form.Control
           size="lg"
           type="text"
